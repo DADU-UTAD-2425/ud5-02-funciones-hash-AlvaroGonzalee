@@ -9,31 +9,37 @@ public class Main {
 			boolean sonIguales=false;
 			//1 - Obten la instancia con algoritmo MD5
 			MessageDigest md = null;
+			md = MessageDigest.getInstance("MD5");
 			
 			System.out.print("Introduzca la password: ");
 			byte[] pwdByte = sc.nextLine().getBytes();
 			//2 - Actualiza la instancia
+			md.update(pwdByte);
 
 			//3 - Calcula el resumen
-			byte[] resumenPwd = null;
+			byte[] resumenPwd = md.digest();
 			do {
 				System.out.print("Repetir password: ");
 				pwdByte = sc.nextLine().getBytes();
 				//4 - Limpia la instancia
-				
+				md.reset();
+
 				//5 - Actualiza la instancia
-				
+				md.update(pwdByte);
 				//6 - Calcula el resumen
 				byte[] resumenPwdRepetir = null;
+				resumenPwdRepetir = md.digest();
 				
 				sonIguales = Arrays.equals(resumenPwd,resumenPwdRepetir);
 				if (!sonIguales) {
 					System.out.println("Password incorrecta");
 				}
 			} while (!sonIguales);
+			sc.close();
 			System.out.println("Fin del programa");
 		} catch (Exception e) {
 			e.printStackTrace();
+			
 		}
 	}
 }
